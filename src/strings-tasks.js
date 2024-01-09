@@ -200,8 +200,16 @@ function removeLastOccurrences(str, value) {
  *   sumOfCodes('') => 0
  *   sumOfCodes() => 0
  */
-function sumOfCodes(/* str */) {
-  throw new Error('Not implemented');
+function sumOfCodes(str) {
+  if (!str) {
+    return 0;
+  }
+  const characters = str.split('');
+  const sum = characters.reduce((accumulator, char) => {
+    return accumulator + char.charCodeAt(0);
+  }, 0);
+
+  return sum;
 }
 
 /**
@@ -247,8 +255,13 @@ function endsWith(str, substr) {
  *   formatTime(0, 45) => "00:45"
  *   formatTime(0, 0) => "00:00"
  */
-function formatTime(/* minutes, seconds */) {
-  throw new Error('Not implemented');
+function formatTime(minutes, seconds) {
+  const formattedMinutes = Math.max(0, Math.floor(minutes));
+  const formattedSeconds = Math.max(0, Math.floor(seconds));
+  const clampedSeconds = Math.min(formattedSeconds, 59);
+  const minutesString = String(formattedMinutes).padStart(2, '0');
+  const secondsString = String(clampedSeconds).padStart(2, '0');
+  return `${minutesString}:${secondsString}`;
 }
 
 /**
@@ -278,8 +291,8 @@ function reverseString(str) {
  *   orderAlphabetically('textbook') => 'bekoottx'
  *   orderAlphabetically('abc123xyz') => '123abcxyz'
  */
-function orderAlphabetically(/* str */) {
-  throw new Error('Not implemented');
+function orderAlphabetically(str) {
+  return str.split('').sort().join('');
 }
 
 /**
@@ -312,8 +325,14 @@ function containsSubstring(str, substring) {
  *   countVowels('aEiOu') => 5
  *   countVowels('XYZ') => 1
  */
-function countVowels(/* str */) {
-  throw new Error('Not implemented');
+function countVowels(str) {
+  const vowels = ['a', 'e', 'i', 'o', 'u', 'y', 'A', 'E', 'I', 'O', 'U', 'Y'];
+  return str.split('').reduce((vowelCount, char) => {
+    if (vowels.includes(char)) {
+      return vowelCount + 1;
+    }
+    return vowelCount;
+  }, 0);
 }
 
 /**
@@ -329,8 +348,9 @@ function countVowels(/* str */) {
  *   isPalindrome('apple') => false
  *   isPalindrome('No lemon, no melon') => true
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  const cleanStr = str.replace(/[^a-zA-Z0-9]/g, '').toLowerCase();
+  return cleanStr === cleanStr.split('').reverse().join('');
 }
 
 /**
@@ -345,8 +365,13 @@ function isPalindrome(/* str */) {
  *   findLongestWord('A long and winding road') => 'winding'
  *   findLongestWord('No words here') => 'words'
  */
-function findLongestWord(/* sentence */) {
-  throw new Error('Not implemented');
+function findLongestWord(sentence) {
+  const words = sentence.split(' ');
+  const longestWord = words.reduce((longest, current) => {
+    const cleanWord = current.replace(/[^a-zA-Z]/g, '');
+    return cleanWord.length > longest.length ? cleanWord : longest;
+  }, '');
+  return longestWord;
 }
 
 /**
@@ -413,8 +438,13 @@ function getStringFromTemplate(firstName, lastName) {
  *   extractNameFromTemplate('Hello, John Doe!') => 'John Doe'
  *   extractNameFromTemplate('Hello, Chuck Norris!') => 'Chuck Norris'
  */
-function extractNameFromTemplate(/* value */) {
-  throw new Error('Not implemented');
+function extractNameFromTemplate(value) {
+  const regex = /Hello, (.+?)!/;
+  const match = value.match(regex);
+  if (match && match[1]) {
+    return match[1];
+  }
+  return null;
 }
 
 /**
@@ -447,8 +477,14 @@ function unbracketTag(str) {
  *   ],
  *   'info@gmail.com' => ['info@gmail.com']
  */
-function extractEmails(/* str */) {
-  throw new Error('Not implemented');
+function extractEmails(str) {
+  if (!str.trim()) {
+    return [];
+  }
+  const emailsArray = str.split(';');
+  const trimmedEmails = emailsArray.map((email) => email.trim());
+
+  return trimmedEmails;
 }
 
 /**
